@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleApp2
@@ -30,34 +30,11 @@ namespace ConsoleApp2
             //this is the last element in the array, since we know it is already sorted in ascending order
             var maxWidth = edges[edges.Length - 1];
 
-            //draw first row
-            DrawHorizontalLine(maxWidth);
-
             //draw middle rows (except first and last)
             DrawSquareBody(edges, maxWidth);
 
-            //draw last row, if the maximum edge is greater that 1, otherwise there is no need
-            if (maxWidth > 1)
-            {
-                DrawHorizontalLine(maxWidth);
-            }
-
             //return result by removing trailing white spaces
             return _result.ToString().TrimEnd();
-        }
-
-        /// <summary>
-        /// Draws a horizontal line with # only
-        /// </summary>
-        /// <param name="length">The length of the line</param>
-        private void DrawHorizontalLine(int length)
-        {
-            for (int i = 0; i < length; i++)
-            {
-                _result.Append(Hash);
-            }
-
-            _result.Append(NewLine);
         }
 
         /// <summary>
@@ -67,11 +44,11 @@ namespace ConsoleApp2
         /// <param name="width">The length of the square</param>
         private void DrawSquareBody(int[] edges, int width)
         {
-            for (int i = 2; i < width; i++)
+            for (int i = 1; i <= width; i++)
             {
                 for (int j = 1; j <= width; j++)
                 {
-                    if (IsFirstOrLastElement(j, width) || IsOnInnerSquareEdge(i, j, edges))
+                    if (IsFirstOrLastElement(i, width) || IsFirstOrLastElement(j, width) || IsOnInnerSquareEdge(i, j, edges))
                     {
                         _result.Append(Hash);
                     }
@@ -88,12 +65,12 @@ namespace ConsoleApp2
         /// <summary>
         /// Checks if coordinate is first or last position on a line of the square
         /// </summary>
-        /// <param name="j">The coordinate</param>
+        /// <param name="index">The coordinate (row or column)</param>
         /// <param name="width">The width of the line</param>
         /// <returns></returns>
-        private static bool IsFirstOrLastElement(int j, int width)
+        private static bool IsFirstOrLastElement(int index, int width)
         {
-            return j == 1 || j == width;
+            return index == 1 || index == width;
         }
 
         /// <summary>
