@@ -5,9 +5,9 @@ namespace ConsoleApp2
 {
     public class ProblemTwo
     {
-        private const string Hash = "#";
-        private const string Space = " ";
-        private const string NewLine = "\n";
+        private const char Hash = '#';
+        private const char Space = ' ';
+        private const char NewLine = '\n';
 
         //Extracted this as a private field, to avoid passing it as an argument to all the methods.
         //Initialized it in the constructor.
@@ -28,9 +28,8 @@ namespace ConsoleApp2
 
             //get maximum edge value
             //this is the last element in the array, since we know it is already sorted in ascending order
-            var maxWidth = edges[edges.Length - 1];
+            int maxWidth = edges[edges.Length - 1];
 
-            //draw middle rows (except first and last)
             DrawSquareBody(edges, maxWidth);
 
             //return result by removing trailing white spaces
@@ -38,24 +37,23 @@ namespace ConsoleApp2
         }
 
         /// <summary>
-        /// Draws body of the square, except first and last line
+        /// Draws squares
         /// </summary>
         /// <param name="edges">The array containing integers - sorted in ascending order</param>
-        /// <param name="width">The length of the square</param>
-        private void DrawSquareBody(int[] edges, int width)
+        /// <param name="maxWidth">The maximum width of the square</param>
+        private void DrawSquareBody(int[] edges, int maxWidth)
         {
-            for (int i = 1; i <= width; i++)
+            for (int i = 1; i <= maxWidth; i++)
             {
-                for (int j = 1; j <= width; j++)
+                for (int j = 1; j <= maxWidth; j++)
                 {
-                    if (IsFirstOrLastElement(i, width) || IsFirstOrLastElement(j, width) || IsOnInnerSquareEdge(i, j, edges))
-                    {
-                        _result.Append(Hash);
-                    }
-                    else
-                    {
-                        _result.Append(Space);
-                    }
+                    char charToAppend = IsFirstOrLastElement(i, maxWidth)
+                                        || IsFirstOrLastElement(j, maxWidth)
+                                        || IsOnInnerSquareEdge(i, j, edges)
+                        ? Hash
+                        : Space;
+
+                    _result.Append(charToAppend);
                 }
 
                 _result.Append(NewLine);
@@ -76,13 +74,13 @@ namespace ConsoleApp2
         /// <summary>
         /// Checks if the given coordinates is on the edge of an inner square (more specifically, bottom edge and right edge)
         /// </summary>
-        /// <param name="i">The current line</param>
-        /// <param name="j">The current row</param>
+        /// <param name="row">The current row</param>
+        /// <param name="column">The current column</param>
         /// <param name="edges">The edges array</param>
         /// <returns>True, if coordinates are on the edge, false otherwise</returns>
-        private static bool IsOnInnerSquareEdge(int i, int j, int[] edges)
+        private static bool IsOnInnerSquareEdge(int row, int column, int[] edges)
         {
-            return edges.Contains(i) && j <= i || edges.Contains(j) && i < j;
+            return edges.Contains(row) && column <= row || edges.Contains(column) && row < column;
         }
     }
 }
