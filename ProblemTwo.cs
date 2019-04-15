@@ -85,9 +85,15 @@ namespace ConsoleApp2
             }
         }
 
-        private static bool IsFirstOrLastElement(int position, int length)
+        /// <summary>
+        /// Checks if coordinate is first or last position on a line of the square
+        /// </summary>
+        /// <param name="j">The coordinate</param>
+        /// <param name="width">The width of the line</param>
+        /// <returns></returns>
+        private static bool IsFirstOrLastElement(int j, int width)
         {
-            return position == 1 || position == length;
+            return j == 1 || j == width;
         }
 
         /// <summary>
